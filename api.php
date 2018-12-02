@@ -50,6 +50,7 @@ class Client
         ]);
         return json_decode($response->getBody());
     }
+
     public function getStopsByLineCode($lineCode)
     {
         $response = $this->request('GET', '/Parada/Buscar', [
@@ -72,20 +73,18 @@ class Client
 }
 
 
-function test()
+function test($client)
 {
-    $token = "9167476f271ff1fc72a42b8be0cfd7a4954adea7dec42ec96a76ac78d7848d45";
-    $client = new Client($token);
 
-    // Linha de onibus
-    $line = $client->getBusLine(6414);
-    var_dump($line);
-    $lineCode = $line[0]->CodigoLinha;
+        // Linha de onibus
+        $line = $client->getBusLine(6414);
+        var_dump($line);
+        $lineCode = $line[0]->CodigoLinha;
 
-    // Posições de onibus de uma linha
-    $positions = $client->getBusPositionByLineCode($lineCode);
-    var_dump($positions);
+        // Posições de onibus de uma linha
+        $positions = $client->getBusPositionByLineCode($lineCode);
+        var_dump($positions);
 }
-test()
+test($client)
 
 ?>
