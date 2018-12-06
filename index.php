@@ -47,10 +47,10 @@
                 <div class="column">
                     <div class="label">Integrantes:</div>
                     <ul class="content">
-                        <li>Amauri Melo Junior</li>
+                        <li>Amauri Melo Junior - 8516650</li>
                         <li>Abner Honorato Ribeiro - 9277670</li>
                         <li>Gabriel Ribeiro da Silva - 9277812</li>
-                        <li>Hector Louzada</li>
+                        <li>Hector Louzada - 9019358</li>
                     </ul>
                 </div>
             </div>
