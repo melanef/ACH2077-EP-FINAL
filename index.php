@@ -7,6 +7,7 @@
     <title>Soluções Web - Grupo 2</title>
 
     <link href="css/bulma.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     <header class="section">
@@ -55,11 +56,28 @@
 
     
     <script type="text/javascript">
+        function searchAddress(address) {
+            $.ajax({
+                url: 'https://maps.googleapis.com/maps/api/geocode/json',
+                data: {
+                    address: address,
+                    key: 'AIzaSyDD7LKv4f0mMt0V1dLw3NObUyybTGg2pAw'
+                },
+                success: function(data) {
+                    if (data.status == 'OK') {
+                        return data.results[0].geometry.location;
+                    }
+                }
+            });
+        }
+
         var map;
         function initMap() {
+            var sp = searchAddress('São Paulo, Brasil');
             map = new google.maps.Map(document.getElementById('map'), {
-                center: 'São Paulo',
-                zoom: 8,
+                //center: {lat: 0, lng: 0},
+                center: sp,
+                zoom: 8
             });
         }
     </script>
