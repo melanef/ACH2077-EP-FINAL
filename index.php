@@ -1,25 +1,12 @@
-<?
-    require_once ('api.php');
-
-    $token = "9167476f271ff1fc72a42b8be0cfd7a4954adea7dec42ec96a76ac78d7848d45";
-    $client = new Client($token);
-
-    test($client);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Soluções Web</title>
-
+    <title>Soluções Web - Grupo 2</title>
 
     <link href="css/bulma.min.css" rel="stylesheet" />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
-
 </head>
 <body>
     <header class="section">
@@ -34,6 +21,7 @@
                         </div>
                     </div>
                     <div class="field">
+                        Exibir:
                         <div class="control">
                             <label class="checkbox">
                                 <input type="checkbox"> Ônibus em movimento</a>
@@ -67,45 +55,14 @@
 
     
     <script type="text/javascript">
-        var lat,long;
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(start);
-            }
-            else { console.log("O seu navegador não suporta Geolocalização."); }
-        }
-
-
-        function start(position) {
-            lat = position.coords.latitude;
-            long = position.coords.longitude;
-
-            mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FycmlyaWJlaXJvIiwiYSI6ImNqb29tMHltaTA0cXczcHFzaWprejRpbTQifQ.xpzFIs7SZxLTBgCX77S_Zg';
-            var map = new mapboxgl.Map({
-                container: 'map', // container id
-                style: 'mapbox://styles/mapbox/streets-v9',
-                center: [long, lat], // starting position
-                zoom: 15 // starting zoom
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: 'São Paulo',
+                zoom: 8,
             });
         }
-
-        getLocation();
-
-
-        function getBusLine(){
-            let buses = <?php echo json_encode($client->getBusLine(6414)); ?>;
-            console.log(buses);
-            
-            // return allBus;
-        }
-
-        function getAllParadasPositions(){
-            let allParadas = <?php echo json_encode($olhovivo->getParadaPorCorredor()); ?>;
-            return allParadas;
-        }
-
-        // getBusLine();
-
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD7LKv4f0mMt0V1dLw3NObUyybTGg2pAw&callback=initMap" async defer></script>
 </body>
 </html>
