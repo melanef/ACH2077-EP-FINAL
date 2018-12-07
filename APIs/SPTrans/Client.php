@@ -29,6 +29,8 @@ class Client
 
         print "<pre>";
         var_dump($response);
+        var_dump($response->getBody());
+        var_dump((string) $response->getBody());
         print "</pre>";
         exit;
 
