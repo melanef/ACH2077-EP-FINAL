@@ -37,6 +37,7 @@ switch ($_GET['resource']) {
 		$messages = [];
 		foreach ($required_parameters as $parameter) {
 			if (empty($_GET[$parameter])) {
+				$valid = false;
 				$messages[] = sprintf('O parâmetro \'%s\' é obrigatório', $parameter);
 			}
 		}
