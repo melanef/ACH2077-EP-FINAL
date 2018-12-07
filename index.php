@@ -9,13 +9,23 @@ $request = Zend\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
 );
 
-$router = new League\Route\Router;
+$responseFactory = new Http\Factory\Diactoros\ResponseFactory;
+
+$strategy = new League\Route\Strategy\JsonStrategy($responseFactory);
+$router   = (new League\Route\Router)->setStrategy($strategy);
 
 // map a route
 $router->map('GET', '/', function (ServerRequestInterface $request) : ResponseInterface {
     $response = new Zend\Diactoros\Response;
     $response->getBody()->write(file_get_contents('views/index.html'));
     return $response;
+});
+
+$router->map('GET', '/api', function (ServerRequestInterface $request) : array {
+    return [
+        'title'   => 'My New Simple API',
+        'version' => 1,
+    ];
 });
 
 $response = $router->dispatch($request);
