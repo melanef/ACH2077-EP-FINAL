@@ -18,7 +18,8 @@
                         <div class="form-control"></div>
                         <label class="label">Endereço:</label>
                         <div class="control">
-                            <input class="input is-medium" type="text" placeholder="Insira o endereço">
+                            <input id="address" class="input is-medium" type="text" placeholder="Insira o endereço">
+                            <button id="search">Buscar</button>
                         </div>
                     </div>
                     <div class="field">
@@ -56,7 +57,7 @@
 
     
     <script type="text/javascript">
-        function searchAddress(address) {
+        function setMap(address) {
             $.ajax({
                 url: 'https://maps.googleapis.com/maps/api/geocode/json',
                 data: {
@@ -65,25 +66,28 @@
                 },
                 success: function(data) {
                     if (data.status == 'OK') {
-                        setMap(data.results[0].geometry.location);
+                        map = new google.maps.Map(document.getElementById('map'), {
+                            center: data.results[0].geometry.location,
+                            zoom: 15
+                        });
                     }
                 }
             });
         }
 
-        function setMap(location) {
-            map = new google.maps.Map(document.getElementById('map'), {
-                //center: {lat: 0, lng: 0},
-                center: location,
-                zoom: 15
-            });
-        }
-
         var map;
         function initMap() {
-            searchAddress('São Paulo, Brasil');
+            setMap('São Paulo, Brasil');
         }
+
+        let addressField = $('#address');
+        let searchButton = $('#search');
+        $(document).ready(function(){
+            searchButton.on('click', function() {
+                setMap(addressField.value());
+            });
+        });
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD7LKv4f0mMt0V1dLw3NObUyybTGg2pAw&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD7LKv4f0mMt0V1dLw3NObUyybTGg2pAw" async defer></script>
 </body>
 </html>
