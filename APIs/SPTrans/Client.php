@@ -27,13 +27,6 @@ class Client
             "token" => $this->spTransToken,
         ]);
 
-        print "<pre>";
-        var_dump($response);
-        var_dump($response->getBody());
-        var_dump((string) $response->getBody());
-        print "</pre>";
-        exit;
-
         if (false === json_decode($response->getBody()))
             throw new \Exception('Authorization did not succeed.');
         if (false === $response->hasHeader('Set-Cookie'))
