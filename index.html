@@ -102,8 +102,8 @@
                                 markers.push(
                                     new google.maps.Marker({
                                         position: {
-                                            lat: new Number(data.data[i].latitude),
-                                            lng: new Number(data.data[i].longitude)
+                                            lat: Number(data.data[i].latitude),
+                                            lng: Number(data.data[i].longitude)
                                         },
                                         map: map
                                     })
