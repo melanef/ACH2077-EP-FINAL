@@ -1,4 +1,9 @@
 {
+    "autoload": {
+        "psr-4": {
+            "ACH2077\\": "./"
+        }
+    },
     "require": {
         "guzzlehttp/guzzle": "~6.0",
         "illuminate/database": "^5.7",
