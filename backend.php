@@ -2,10 +2,7 @@
 
 namespace ACH2077;
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-include 'vendor/autoload.php';
+require_once('init.php');
 
 if (empty($_GET['resource'])) {
 	header('Location: https://g2.each3.tk');
