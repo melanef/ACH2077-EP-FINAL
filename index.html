@@ -26,10 +26,10 @@
                         Exibir:
                         <div class="control">
                             <label class="checkbox">
-                                <input type="checkbox"> Ônibus em movimento</a>
+                                <input type="checkbox" id="vehicles"> Ônibus em movimento</a>
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox"> Parada de ônibus</a>
+                                <input type="checkbox" id="stops"> Parada de ônibus</a>
                             </label>
                         </div>
                     </div>
@@ -70,18 +70,53 @@
                             center: data.results[0].geometry.location,
                             zoom: 15
                         });
+
+                        boundaries = map.getBounds();
+                        fetchStops();
+                        fetchVehicles();
                     }
                 }
             });
         }
 
-        var map;
+        function fetchStops() {
+            if (typeof map != 'undefined' && options.renderStops) {
+                $.ajax({
+                    url: 'https://g2.each3.tk/backend.php',
+                    data: {
+                        'minLat': map.getBounds().getSouthWest().lat(),
+                        'minLng': map.getBounds().getSouthWest().lng(),
+                        'maxLat': map.getBounds().getNorthEast().lat(),
+                        'maxLng': map.getBounds().getNorthEast().lng(),
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            console.log(data.data);
+                        }
+                    }
+                });
+            }
+        }
+
+        function clearStops() {}
+
+        function fetchVehicles() {
+
+        }
+
+        function clearVehicles() {}
+
+        let map;
+        let boundaries;
+        let options;
         function initMap() {
             setMap('São Paulo, Brasil');
         }
 
         let addressField = $('#address');
         let searchButton = $('#search');
+        let stopsFilter = $('#stops');
+        let vehiclesFilter = $('#vehicles');
         $(document).ready(function(){
             addressField.on('keypress', function(event) {
                 if (event.which == 13 || event.keyCode == 13) {
@@ -95,6 +130,22 @@
             searchButton.on('click', function() {
                 setMap(addressField.val());
             });
+
+            stopsFilter.on('click', function() {
+                options.renderStops = stopsFilter.attr('checked');
+                if (options.renderStops) {
+                    fetchStops();
+                } else {
+                    clearStops();
+                }
+            });
+
+            vehiclesFilter.on('click', function() {
+                options.renderVehicles = vehiclesFilter.attr('checked');
+            });
+
+            options.renderStops = stopsFilter.attr('checked');
+            options.renderVehicles = vehiclesFilter.attr('checked');
         });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD7LKv4f0mMt0V1dLw3NObUyybTGg2pAw" async defer></script>
