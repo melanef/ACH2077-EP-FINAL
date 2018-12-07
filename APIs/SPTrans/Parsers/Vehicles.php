@@ -11,7 +11,7 @@ class Vehicles
 		$routes = $raw_data['l'];
 		foreach ($routes as $route) {
 			foreach ($route['vs'] as $raw_vehicle) {
-				$vehicles[] = [
+				$this->vehicles[] = [
 					'route' => $route['c'],
 					'latitude' => $raw_vehicle['py'],
 					'longitude' => $raw_vehicle['px'],
