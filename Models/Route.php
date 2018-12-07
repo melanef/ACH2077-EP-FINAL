@@ -2,6 +2,6 @@
 
 namespace ACH2077\Models;
 
-class Route extends Illuminate\Database\Eloquent\Model {
+class Route extends \Illuminate\Database\Eloquent\Model {
 	
 }
