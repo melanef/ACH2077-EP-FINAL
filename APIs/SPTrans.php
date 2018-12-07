@@ -1,18 +1,18 @@
 <?php
 
-namespace ACH2077\SPTrans\API;
-require 'vendor/autoload.php';
+namespace ACH2077\APIs\SPTrans;
+
 use GuzzleHttp\Client as HttpClient;
 
 class Client
 {
     const BASE_URL = "http://api.olhovivo.sptrans.com.br/v0";
-    private $spTransToken = "";
+    private $spTransToken;
 
     public function __construct($token)
     {
         $this->spTransToken = $token;
-        $this->login($token);
+        $this->login();
     }
 
     public function getHost()
@@ -20,10 +20,10 @@ class Client
         return trim(self::BASE_URL, '/');
     }
 
-    private function login($token)
+    private function login()
     {
         $response = $this->request('POST', "/Login/Autenticar", [
-            "token" => $token
+            "token" => $this->spTransToken,
         ]);
         if (false === json_decode($response->getBody()))
             throw new \Exception('Authorization did not succeed.');
@@ -39,7 +39,6 @@ class Client
             'termosBusca' => $param
         ]);
 
-
         return json_decode($response->getBody());
     }
 
@@ -48,6 +47,7 @@ class Client
         $response = $this->request('GET', '/Posicao', [
             'codigoLinha' => $lineCode
         ]);
+
         return json_decode($response->getBody());
     }
 
@@ -66,25 +66,10 @@ class Client
         $httpClient  = new \GuzzleHttp\Client();
         $httpRequest = new \GuzzleHttp\Psr7\Request($method, $url);
         $params = ['query' => $queryString];
-        if ($this->apiCredential)
+        if ($this->apiCredential) {
             $params['headers'] = ['Cookie' => $this->apiCredential];
+        }
+        
         return $httpClient->send($httpRequest, $params);
     }
 }
-
-
-function test($client)
-{
-
-        // Linha de onibus
-        $line = $client->getBusLine(6414);
-        var_dump($line);
-        $lineCode = $line[0]->CodigoLinha;
-
-        // Posições de onibus de uma linha
-        $positions = $client->getBusPositionByLineCode($lineCode);
-        var_dump($positions);
-}
-test($client)
-
-?>
