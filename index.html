@@ -60,6 +60,7 @@
         function setMap(address) {
             $.ajax({
                 url: 'https://maps.googleapis.com/maps/api/geocode/json',
+                method: 'GET',
                 data: {
                     address: address,
                     key: 'AIzaSyDD7LKv4f0mMt0V1dLw3NObUyybTGg2pAw'
@@ -84,10 +85,11 @@
 
         function fetchStops() {
             if (typeof map != 'undefined' && options.renderStops) {
-                console.log(map);
                 $.ajax({
                     url: 'https://g2.each3.tk/backend.php',
+                    method: 'GET',
                     data: {
+                        'resource': 'stops',
                         'minLat': map.getBounds().getSouthWest().lat(),
                         'minLng': map.getBounds().getSouthWest().lng(),
                         'maxLat': map.getBounds().getNorthEast().lat(),
