@@ -97,13 +97,16 @@ switch ($_GET['resource']) {
 
 		$client = new APIs\SPTrans\Client('9167476f271ff1fc72a42b8be0cfd7a4954adea7dec42ec96a76ac78d7848d45');
 		$vehicles = $client->getBusPositions();
-		
-		print "<pre>";
-		var_dump($vehicles);
-		print "</pre>";
-		exit;
-
 		$response['data'] = [];
+		
+		foreach ($vehicles as $vehicle) {
+			if (
+				($vehicle['latitude'] >= $_GET['minLat'] && $vehicle['latitude'] <= $_GET['maxLat']) &&
+				($vehicle['longitude'] >= $_GET['minLng'] && $vehicle['longitude'] <= $_GET['maxLng'])
+			) {
+				$response['data]'][] = $vehicle;
+			}
+		}
 
 		break;
 	default:
