@@ -100,8 +100,11 @@
                             for (let i = 0; i < data.data.length; i++) {
                                 markers.push(
                                     new google.maps.Marker({
-                                        lat: data.data[i].latitde,
-                                        lng: data.data[i].longitude
+                                        position: {
+                                            lat: data.data[i].latitde,
+                                            lng: data.data[i].longitude
+                                        },
+                                        map: map
                                     })
                                 );
                             }
