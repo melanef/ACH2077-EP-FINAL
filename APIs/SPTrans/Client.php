@@ -68,7 +68,7 @@ class Client
         return json_decode($response->getBody());
     }
 
-    private function request($method, $resource, $queryString)
+    private function request($method, $resource, $queryString = [])
     {
         $resource = trim($resource, '/');
         $url      = "{$this->getHost()}/$resource";
