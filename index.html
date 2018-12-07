@@ -71,7 +71,6 @@
                             zoom: 15
                         });
 
-                        boundaries = map.getBounds();
                         fetchStops();
                         fetchVehicles();
                     }
@@ -107,8 +106,7 @@
         function clearVehicles() {}
 
         let map;
-        let boundaries;
-        let options;
+        let options = {};
         function initMap() {
             setMap('São Paulo, Brasil');
         }
