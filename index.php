@@ -65,20 +65,23 @@
                 },
                 success: function(data) {
                     if (data.status == 'OK') {
-                        return data.results[0].geometry.location;
+                        setMap(data.results[0].geometry.location);
                     }
                 }
             });
         }
 
-        var map;
-        function initMap() {
-            var sp = searchAddress('São Paulo, Brasil');
+        function setMap(location) {
             map = new google.maps.Map(document.getElementById('map'), {
                 //center: {lat: 0, lng: 0},
-                center: sp,
+                center: location,
                 zoom: 8
             });
+        }
+
+        var map;
+        function initMap() {
+            searchAddress('São Paulo, Brasil');
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD7LKv4f0mMt0V1dLw3NObUyybTGg2pAw&callback=initMap" async defer></script>
