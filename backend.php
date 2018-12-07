@@ -23,6 +23,19 @@ switch ($_GET['resource']) {
 			];
 		}
 		break;
+	case 'stops': 
+		$stops = Models\Stop::all();
+		$response = [];
+		foreach ($stops as $stop) {
+			$response[] = [
+				'id' => $stop->id,
+				'name' => $stop->name,
+				'description' => $stop->description,
+				'latitude' => $stop->latitude,
+				'longitude' => $stop->longitude,
+			];
+		}
+		break;
 	default:
 		header('Location: https://g2.each3.tk');
 		exit;
