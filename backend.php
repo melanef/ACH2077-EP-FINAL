@@ -1,5 +1,7 @@
 <?php
 
+namespace ACH2077;
+
 include 'vendor/autoload.php';
 
 if (empty($_GET['resource'])) {
@@ -9,7 +11,17 @@ if (empty($_GET['resource'])) {
 
 switch ($_GET['resource']) {
 	case 'routes': 
-		$response = ['foo' => 'bar'];
+		$routes = Models\Route::all();
+		$response = [];
+		foreach ($routes as $route) {
+			$response[] = [
+				'id' => $route->id,
+				'short_name' => $route->short_name,
+				'name' => $route->name,
+				'color' => $route->color,
+				'text_color' => $route->text_color,
+			];
+		}
 		break;
 	default:
 		header('Location: https://g2.each3.tk');

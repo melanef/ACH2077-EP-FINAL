@@ -10,7 +10,7 @@ CREATE TABLE stops (
 	FULLTEXT (name, description)
 );
 
-INSERT INTO routes (`id`, `name`, `description`, `latitude`, `longitude`) VALUES
+INSERT INTO stops (`id`, `name`, `description`, `latitude`, `longitude`) VALUES
 (18848,"Clínicas","",-23.554022,-46.67110),
 (18849,"Vila Madalena","",-23.546502,-46.69113),
 (18850,"Consolação","",-23.558094,-46.66020),
