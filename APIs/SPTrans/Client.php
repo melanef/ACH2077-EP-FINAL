@@ -27,7 +27,9 @@ class Client
             "token" => $this->spTransToken,
         ]);
 
+        print "<pre>";
         var_dump($response);
+        print "</pre>";
         exit;
 
         if (false === json_decode($response->getBody()))
