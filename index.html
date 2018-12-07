@@ -149,7 +149,10 @@
                             for (let i = 0; i < data.data.length; i++) {
                                 vehiclesMakers.push(
                                     new google.maps.Marker({
-                                        icon: 'https://g2.each3.tk/images/ico-bus.png',
+                                        icon: {
+                                            url: 'https://g2.each3.tk/images/ico-bus.png',
+                                            scaledSize: google.maps.Size(30, 30)
+                                        },
                                         title: data.data[i].route + ': ' + data.data[i].from + ' - ' + data.data[i].to,
                                         position: {
                                             lat: Number(data.data[i].latitude),
