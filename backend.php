@@ -52,12 +52,12 @@ switch ($_GET['resource']) {
 		}
 
 		$response['data'] = [];
-		$stops = Models\Stop::where('description', '!=', '')
-			->where('latitude', '>=', $_GET['minLat'])
-			->where('latitude', '<=', $_GET['maxLat'])
-			->where('longitude', '>=', $_GET['minLng'])
-			->where('longitude', '<=', $_GET['maxLng'])
-		;
+		$stops = Models\Stop::where([
+			['latitude', '>=', $_GET['minLat']],
+			['latitude', '<=', $_GET['maxLat']],
+			['longitude', '>=', $_GET['minLng']],
+			['longitude', '<=', $_GET['maxLng']],
+		]);
 		foreach ($stops as $stop) {
 			$response['data'][] = [
 				'id' => $stop->id,
