@@ -132,7 +132,7 @@
             });
 
             stopsFilter.on('click', function() {
-                options.renderStops = stopsFilter.attr('checked');
+                options.renderStops = stopsFilter.prop('checked');
                 if (options.renderStops) {
                     fetchStops();
                 } else {
@@ -141,11 +141,11 @@
             });
 
             vehiclesFilter.on('click', function() {
-                options.renderVehicles = vehiclesFilter.attr('checked');
+                options.renderVehicles = vehiclesFilter.prop('checked');
             });
 
-            options.renderStops = stopsFilter.attr('checked');
-            options.renderVehicles = vehiclesFilter.attr('checked');
+            options.renderStops = stopsFilter.prop('checked');
+            options.renderVehicles = vehiclesFilter.prop('checked');
         });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD7LKv4f0mMt0V1dLw3NObUyybTGg2pAw" async defer></script>
