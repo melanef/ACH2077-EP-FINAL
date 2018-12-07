@@ -57,6 +57,19 @@
 
     
     <script type="text/javascript">
+        function addListeners(map) {
+            map.addListener('zoom_changed', function() {
+                options.zoom = map.getZoom();
+            });
+
+            map.addListener('bounds_changed', function() {
+                clearStops();
+                fetchStops();
+                clearVehicles();
+                fetchVehicles();
+            });
+        }
+
         function setMap(address) {
             $.ajax({
                 url: 'https://maps.googleapis.com/maps/api/geocode/json',
@@ -69,15 +82,10 @@
                     if (data.status == 'OK') {
                         map = new google.maps.Map(document.getElementById('map'), {
                             center: data.results[0].geometry.location,
-                            zoom: 15
+                            zoom: options.zoom
                         });
 
-                        map.addListener('bounds_changed', function() {
-                            clearStops();
-                            fetchStops();
-                            clearVehicles();
-                            fetchVehicles();
-                        });
+                        addListeners(map);
                     }
                 }
             });
@@ -130,10 +138,29 @@
         function clearVehicles() {}
 
         let map;
-        let options = {};
+        let options = {
+            zoom: 17,
+            renderStops: false,
+            renderVehicles: false
+        };
         let markers = [];
         function initMap() {
-            setMap('São Paulo, Brasil');
+            if (navigator.geolocation) {
+                options.renderStops = true;
+                options.renderVehicles = true;
+
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        center: {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        },
+                        zoom: options.zoom
+                    });
+
+                    addListeners(map);
+                });
+            }
         }
 
         let addressField = $('#address');
@@ -167,10 +194,10 @@
                 options.renderVehicles = vehiclesFilter.prop('checked');
             });
 
-            options.renderStops = stopsFilter.prop('checked');
-            options.renderVehicles = vehiclesFilter.prop('checked');
+            options.renderStops = options.renderStops || stopsFilter.prop('checked');
+            options.renderVehicles = options.renderVehicles || vehiclesFilter.prop('checked');
         });
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD7LKv4f0mMt0V1dLw3NObUyybTGg2pAw" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD7LKv4f0mMt0V1dLw3NObUyybTGg2pAw&callback=initMap" async defer></script>
 </body>
 </html>
