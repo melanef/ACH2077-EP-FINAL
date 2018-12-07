@@ -107,7 +107,7 @@
                     success: function(data) {
                         if (data.success) {
                             for (let i = 0; i < data.data.length; i++) {
-                                markers.push(
+                                stopMakers.push(
                                     new google.maps.Marker({
                                         title: data.data[i].name,
                                         position: {
@@ -125,18 +125,52 @@
         }
 
         function clearStops() {
-            for (let i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
+            for (let i = 0; i < stopMakers.length; i++) {
+                stopMakers[i].setMap(null);
             }
 
-            markers = [];
+            stopMakers = [];
         }
 
         function fetchVehicles() {
-
+            if (typeof map != 'undefined' && options.renderVehicles) {
+                $.ajax({
+                    url: 'https://g2.each3.tk/backend.php',
+                    method: 'GET',
+                    data: {
+                        'resource': 'vehicles',
+                        'minLat': map.getBounds().getSouthWest().lat(),
+                        'minLng': map.getBounds().getSouthWest().lng(),
+                        'maxLat': map.getBounds().getNorthEast().lat(),
+                        'maxLng': map.getBounds().getNorthEast().lng(),
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            for (let i = 0; i < data.data.length; i++) {
+                                vehiclesMakers.push(
+                                    new google.maps.Marker({
+                                        title: data.data[i].route + ': ' + data.data[i].from + ' - ' + data.data[i].to,
+                                        position: {
+                                            lat: Number(data.data[i].latitude),
+                                            lng: Number(data.data[i].longitude)
+                                        },
+                                        map: map
+                                    })
+                                );
+                            }
+                        }
+                    }
+                });
+            }
         }
 
-        function clearVehicles() {}
+        function clearVehicles() {
+            for (let i = 0; i < vehiclesMakers.length; i++) {
+                vehiclesMakers[i].setMap(null);
+            }
+
+            vehiclesMakers = [];
+        }
 
         let map;
         let options = {
@@ -144,10 +178,12 @@
             renderStops: false,
             renderVehicles: false
         };
-        let markers = [];
+        let stopMakers = [];
+        let vehiclesMakers = [];
 
         let addressField = $('#address');
         let searchButton = $('#search');
+        let refreshButton = $('#refresh');
         let stopsFilter = $('#stops');
         let vehiclesFilter = $('#vehicles');
 
@@ -158,9 +194,10 @@
                         options.renderStops = true;
                         options.renderVehicles = true;
 
+                        refreshButton.show();
+
                         stopsFilter.prop('checked', true);
                         vehiclesFilter.prop('checked', true);
-
                 
                         map = new google.maps.Map(document.getElementById('map'), {
                             center: {
@@ -194,6 +231,11 @@
                 setMap(addressField.val());
             });
 
+            refreshButton.on('click', function() {
+                clearVehicles();
+                fetchVehicles();
+            });
+
             stopsFilter.on('click', function() {
                 options.renderStops = stopsFilter.prop('checked');
                 if (options.renderStops) {
@@ -205,10 +247,22 @@
 
             vehiclesFilter.on('click', function() {
                 options.renderVehicles = vehiclesFilter.prop('checked');
+
+                if (!options.renderVehicles) {
+                    refreshButton.hide();
+                } else {
+                    refreshButton.show();
+                }
             });
 
             options.renderStops = options.renderStops || stopsFilter.prop('checked');
             options.renderVehicles = options.renderVehicles || vehiclesFilter.prop('checked');
+
+            if (!options.renderVehicles) {
+                refreshButton.hide();
+            } else {
+                refreshButton.show();
+            }
         });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD7LKv4f0mMt0V1dLw3NObUyybTGg2pAw&callback=initMap" async defer></script>
