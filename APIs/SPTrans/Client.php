@@ -50,7 +50,7 @@ class Client
             'codigoLinha' => $lineCode
         ]);
 
-        return json_decode($response->getBody());
+        return json_decode($response->getBody(), true);
     }
 
     public function getStopsByLineCode($lineCode)
