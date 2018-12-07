@@ -6,7 +6,7 @@ class Vehicles
 {
 	protected $vehicles = [];
 
-	public __construct(array $raw_data)
+	public function __construct(array $raw_data)
 	{
 		$routes = $raw_data['l'];
 		foreach ($routes as $route) {
