@@ -83,6 +83,15 @@
         let addressField = $('#address');
         let searchButton = $('#search');
         $(document).ready(function(){
+            addressField.on('keyPress', function(event) {
+                if (event.which == 13 || event.keyCode == 13) {
+                    setMap(addressField.value());
+                    return false;
+                }
+
+                return true;
+            });
+            
             searchButton.on('click', function() {
                 setMap(addressField.value());
             });
