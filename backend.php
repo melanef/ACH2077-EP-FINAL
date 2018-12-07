@@ -96,7 +96,7 @@ switch ($_GET['resource']) {
 		}
 
 		$routes = Models\Route::all();
-		$client = new APIs\SPTrans\Client('AIzaSyDD7LKv4f0mMt0V1dLw3NObUyybTGg2pAw');
+		$client = new APIs\SPTrans\Client('9167476f271ff1fc72a42b8be0cfd7a4954adea7dec42ec96a76ac78d7848d45');
 		
 		$response['data'] = [];
 
