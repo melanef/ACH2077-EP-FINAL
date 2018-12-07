@@ -6,8 +6,9 @@ use GuzzleHttp\Client as HttpClient;
 
 class Client
 {
-    const BASE_URL = "http://api.olhovivo.sptrans.com.br/v0";
+    const BASE_URL = "http://api.olhovivo.sptrans.com.br/v2.1";
     private $spTransToken;
+    private $apiCredential;
 
     public function __construct($token)
     {
@@ -69,7 +70,7 @@ class Client
         if ($this->apiCredential) {
             $params['headers'] = ['Cookie' => $this->apiCredential];
         }
-        
+
         return $httpClient->send($httpRequest, $params);
     }
 }
