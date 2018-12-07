@@ -152,23 +152,30 @@
 
         function initMap() {
             if (navigator.geolocation) {
-                options.renderStops = true;
-                options.renderVehicles = true;
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        options.renderStops = true;
+                        options.renderVehicles = true;
 
-                stopsFilter.prop('checked', true);
-                vehiclesFilter.prop('checked', true);
+                        stopsFilter.prop('checked', true);
+                        vehiclesFilter.prop('checked', true);
 
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    map = new google.maps.Map(document.getElementById('map'), {
-                        center: {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        },
-                        zoom: options.zoom
-                    });
+                
+                        map = new google.maps.Map(document.getElementById('map'), {
+                            center: {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            },
+                            zoom: options.zoom
+                        });
 
-                    addListeners(map);
-                });
+                        addListeners(map);
+                    },
+                    function(positionError) {},
+                    {
+                        timeout: 1500
+                    }
+                );
             }
         }
 
