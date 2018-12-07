@@ -104,7 +104,7 @@ switch ($_GET['resource']) {
 				($vehicle['latitude'] >= $_GET['minLat'] && $vehicle['latitude'] <= $_GET['maxLat']) &&
 				($vehicle['longitude'] >= $_GET['minLng'] && $vehicle['longitude'] <= $_GET['maxLng'])
 			) {
-				$response['data]'][] = $vehicle;
+				$response['data'][] = $vehicle;
 			}
 		}
 
