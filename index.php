@@ -65,6 +65,7 @@
                 },
                 success: function(data) {
                     if (data.status == 'OK') {
+                        console.log(data);
                         setMap(data.results[0].geometry.location);
                     }
                 }
