@@ -12,9 +12,12 @@ if (empty($_GET['resource'])) {
 switch ($_GET['resource']) {
 	case 'routes': 
 		$routes = Models\Route::all();
-		$response = [];
+		$response = [
+			'success' => true,
+			'data' => [],
+		];
 		foreach ($routes as $route) {
-			$response[] = [
+			$response['data'][] = [
 				'id' => $route->id,
 				'short_name' => $route->short_name,
 				'name' => $route->name,
@@ -24,10 +27,38 @@ switch ($_GET['resource']) {
 		}
 		break;
 	case 'stops': 
-		$stops = Models\Stop::all();
-		$response = [];
+		$required_parameters = [
+			'minLat',
+			'minLng',
+			'maxLat',
+			'maxLng',
+		];
+		$valid = true;
+		$messages = [];
+		foreach ($required_parameters as $parameter) {
+			if (empty($_GET[$parameter])) {
+				$messages[] = sprintf('O parâmetro \'%s\' é obrigatório');;
+			}
+		}
+
+		$response = [
+			'success' => $valid,
+		];
+
+		if (!$valid) {
+			$response['errors'] = $messages;
+			break;
+		}
+
+		$response['data'] = [];
+		$stops = Models\Stop::where('description', '!=', '')
+			->where('latitude', '>=', $_GET['minLat'])
+			->where('latitude', '<=', $_GET['maxLat'])
+			->where('longitude', '>=', $_GET['minLng'])
+			->where('longitude', '<=', $_GET['maxLng'])
+		;
 		foreach ($stops as $stop) {
-			$response[] = [
+			$response['data'][] = [
 				'id' => $stop->id,
 				'name' => $stop->name,
 				'description' => $stop->description,
