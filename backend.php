@@ -9,7 +9,7 @@ if (empty($_GET['resource'])) {
 
 switch ($_GET['resource']) {
 	case 'routes': 
-		$response = ['foo': 'bar'];
+		$response = ['foo' => 'bar'];
 		break;
 	default:
 		header('Location: https://g2.each3.tk');
