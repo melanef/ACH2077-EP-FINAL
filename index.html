@@ -71,8 +71,12 @@
                             zoom: 15
                         });
 
-                        fetchStops();
-                        fetchVehicles();
+                        map.addListener('bounds_changed', function() {
+                            clearStops();
+                            fetchStops();
+                            clearVehicles();
+                            fetchVehicles();
+                        });
                     }
                 }
             });
