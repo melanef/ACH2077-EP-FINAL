@@ -22,7 +22,7 @@ class Vehicles
 		}
 	}
 
-	public getOutput()
+	public function getOutput()
 	{
 		return $this->vehicles;
 	}
