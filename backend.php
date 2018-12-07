@@ -14,8 +14,6 @@ switch ($_GET['resource']) {
 		$routes = Models\Route::all();
 		$response = [];
 		foreach ($routes as $route) {
-			print $route->id;
-			/*
 			$response[] = [
 				'id' => $route->id,
 				'short_name' => $route->short_name,
@@ -23,7 +21,6 @@ switch ($_GET['resource']) {
 				'color' => $route->color,
 				'text_color' => $route->text_color,
 			];
-			*/
 		}
 		break;
 	default:
@@ -31,7 +28,5 @@ switch ($_GET['resource']) {
 		exit;
 }
 
-/*
 header('Content-Type: application/json');
 print json_encode($response);
-*/
