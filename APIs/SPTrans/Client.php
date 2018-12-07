@@ -57,7 +57,9 @@ class Client
     {
         $response = $this->request('GET', '/Posicao');
 
-        return (new Parsers\Vehicles(json_decode($response->getBody(), true)))->getOutput();
+        /*return*/ (new Parsers\Vehicles(json_decode($response->getBody(), true)));//->getOutput();
+        var_dump(1);
+        exit;
     }
 
     public function getStopsByLineCode($lineCode)
