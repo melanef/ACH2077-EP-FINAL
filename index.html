@@ -97,7 +97,14 @@
                     },
                     success: function(data) {
                         if (data.success) {
-                            console.log(data.data);
+                            for (let i = 0; i < data.data.length; i++) {
+                                markers.push(
+                                    new google.maps.Marker({
+                                        lat: data.data[i].latitde,
+                                        lng: data.data[i].longitude
+                                    });
+                                );
+                            }
                         }
                     }
                 });
@@ -114,6 +121,7 @@
 
         let map;
         let options = {};
+        let markers = [];
         function initMap() {
             setMap('São Paulo, Brasil');
         }

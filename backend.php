@@ -57,7 +57,8 @@ switch ($_GET['resource']) {
 			['latitude', '<=', $_GET['maxLat']],
 			['longitude', '>=', $_GET['minLng']],
 			['longitude', '<=', $_GET['maxLng']],
-		]);
+		])
+			->get();
 		foreach ($stops as $stop) {
 			$response['data'][] = [
 				'id' => $stop->id,
