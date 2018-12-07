@@ -95,19 +95,15 @@ switch ($_GET['resource']) {
 			break;
 		}
 
-		$routes = Models\Route::all();
 		$client = new APIs\SPTrans\Client('9167476f271ff1fc72a42b8be0cfd7a4954adea7dec42ec96a76ac78d7848d45');
+		$vehicles = $client->getBusPositions($route->short_name);
 		
+		print "<pre>";
+		var_dump($vehicles);
+		print "</pre>";
+		exit;
+
 		$response['data'] = [];
-
-		foreach ($routes as $route) {
-			$route_vehicles = $client->getBusPositionByLineCode($route->short_name);
-
-			var_dump($route_vehicles);
-			exit;
-
-			$response['data'] = array_merge($response['data'], $route_vehicles);
-		}
 
 		break;
 	default:

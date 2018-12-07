@@ -53,6 +53,13 @@ class Client
         return json_decode($response->getBody(), true);
     }
 
+    public function getBusPositions()
+    {
+        $response = $this->request('GET', '/Posicao');
+
+        return json_decode($response->getBody(), true);
+    }
+
     public function getStopsByLineCode($lineCode)
     {
         $response = $this->request('GET', '/Parada/Buscar', [
