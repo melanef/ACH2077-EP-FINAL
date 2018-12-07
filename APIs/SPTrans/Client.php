@@ -26,6 +26,10 @@ class Client
         $response = $this->request('POST', "/Login/Autenticar", [
             "token" => $this->spTransToken,
         ]);
+
+        var_dump($response);
+        exit;
+
         if (false === json_decode($response->getBody()))
             throw new \Exception('Authorization did not succeed.');
         if (false === $response->hasHeader('Set-Cookie'))
