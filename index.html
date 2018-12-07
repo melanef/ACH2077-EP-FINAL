@@ -144,10 +144,19 @@
             renderVehicles: false
         };
         let markers = [];
+
+        let addressField = $('#address');
+        let searchButton = $('#search');
+        let stopsFilter = $('#stops');
+        let vehiclesFilter = $('#vehicles');
+
         function initMap() {
             if (navigator.geolocation) {
                 options.renderStops = true;
                 options.renderVehicles = true;
+
+                stopsFilter.prop('checked', true);
+                vehiclesFilter.prop('checked', true);
 
                 navigator.geolocation.getCurrentPosition(function(position) {
                     map = new google.maps.Map(document.getElementById('map'), {
@@ -163,10 +172,6 @@
             }
         }
 
-        let addressField = $('#address');
-        let searchButton = $('#search');
-        let stopsFilter = $('#stops');
-        let vehiclesFilter = $('#vehicles');
         $(document).ready(function(){
             addressField.on('keypress', function(event) {
                 if (event.which == 13 || event.keyCode == 13) {
