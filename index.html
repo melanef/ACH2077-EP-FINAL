@@ -149,6 +149,7 @@
                             for (let i = 0; i < data.data.length; i++) {
                                 vehiclesMakers.push(
                                     new google.maps.Marker({
+                                        icon: 'https://g2.each3.tk/images/ico-bus.png',
                                         title: data.data[i].route + ': ' + data.data[i].from + ' - ' + data.data[i].to,
                                         position: {
                                             lat: Number(data.data[i].latitude),
@@ -247,11 +248,12 @@
 
             vehiclesFilter.on('click', function() {
                 options.renderVehicles = vehiclesFilter.prop('checked');
-
-                if (!options.renderVehicles) {
-                    refreshButton.hide();
-                } else {
+                if (options.renderVehicles) {
+                    fetchVehicles();
                     refreshButton.show();
+                } else {
+                    clearVehicles();
+                    refreshButton.hide();
                 }
             });
 
